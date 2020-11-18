@@ -1,5 +1,15 @@
 (() =>{
 
+    const actions = {
+        birdFlies(key){
+            if(key) {
+                document.querySelector('[data-index="2"] .bird').style.transform = `translateX(${window.innerWidth}px)`;
+            }else{
+                document.querySelector('[data-index="2"] .bird').style.transform = `translateX(-100%)`;
+            }
+        }
+    };
+
     const stepElement = document.querySelectorAll('.step');
     const graphicElement = document.querySelectorAll('.graphic-item');
     let currentItem = graphicElement[0]; //현재 활성화된 visible 클래스가 붙은  .graphic-item을 나타냄
@@ -16,12 +26,18 @@
         graphicElement[i].dataset.index = i;
     }
 
-    function activate(){
+    function activate(action){
         currentItem.classList.add('visible');
+        if(action){
+            actions[action](true);
+        }
     }
 
-    function inactivate(){
+    function inactivate(action){
         currentItem.classList.remove('visible');
+        if(action){
+            actions[action](false);
+        }
     }
 
 
@@ -31,7 +47,7 @@
 
         //for(let i = 0; i < stepElement.length; i ++){
         for(let i = ioIndex - 1; i < ioIndex + 2; i ++){
-            step = stepElement[i];
+            step = stepElement[i]; 
             if(!step) continue;
             boundingRect = step.getBoundingClientRect(); 
 
@@ -40,10 +56,10 @@
                 
                 inactivate(); 
                 currentItem = graphicElement[step.dataset.index];
-                activate();
+                activate(currentItem.dataset.action);
             }
         }
-        
+
     });
 
     activate();
