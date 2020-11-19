@@ -7,6 +7,13 @@
             }else{
                 document.querySelector('[data-index="2"] .bird').style.transform = `translateX(-100%)`;
             }
+        },
+        birdFlies2(key){
+            if(key) {
+                document.querySelector('[data-index="5"] .bird').style.transform = `translate(${window.innerWidth}px, ${-window.innerHeight * 0.7}px)`;
+            }else{
+                document.querySelector('[data-index="5"] .bird').style.transform = `translateX(-100%)`;
+            }
         }
     };
 
@@ -54,12 +61,16 @@
             if(boundingRect.top > window.innerHeight * 0.1 &&
                 boundingRect.top < window.innerHeight * 0.8){
                 
-                inactivate(); 
+                inactivate(currentItem.dataset.action); 
                 currentItem = graphicElement[step.dataset.index];
                 activate(currentItem.dataset.action);
             }
         }
 
+    });
+
+    window.addEventListener('load', () => {
+        setTimeout(() => scroll(0, 0), 100);
     });
 
     activate();
